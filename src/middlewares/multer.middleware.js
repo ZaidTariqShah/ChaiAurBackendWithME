@@ -1,4 +1,6 @@
 import multer from "multer";
+//Multer handles file uploads in Express and saves the uploaded file
+// to your server so you can use it (like sending it to Cloudinary).
 
 const storage = multer.diskStorage({
    destination: function (req, file, cb) {
@@ -9,4 +11,3 @@ const storage = multer.diskStorage({
    },
 });
 export const upload = multer({ storage });
-

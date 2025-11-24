@@ -1,9 +1,11 @@
-export const asyncHandler = (requestHandler) => {
+const asyncHandler = (requestHandler) => {
    return (req, res, next) => {
       //(req, res, next) So ANY function that Express executes with these three arguments automatically becomes a middleware.
       Promise.resolve(requestHandler(req, res, next)).catch((err) => next(err));
    };
 };
+
+export { asyncHandler };
 
 // const asyncHandler = (fn) => async (req, res, next) => {
 //    try {

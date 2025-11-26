@@ -170,7 +170,7 @@ const logoutUser = asyncHandler(async (req, res) => {
       .json(new ApiResponse(200, {}, "User logged out successfully"));
 });
 
-const refreshAccessToken = asyncHandler(async (req,res) => {
+const refreshAccessToken = asyncHandler(async (req, res) => {
    const incomingRefreshToken =
       req.cookies.refreshToken || req.body.refreshToken; // for mobile apps
    if (!incomingRefreshToken) {
@@ -202,7 +202,7 @@ const refreshAccessToken = asyncHandler(async (req,res) => {
          .json(
             new ApiResponse(
                200,
-               { accessToken, refreshToken},
+               { accessToken, refreshToken },
                "Access token refreshed"
             )
          );

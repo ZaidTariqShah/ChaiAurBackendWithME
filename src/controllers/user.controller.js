@@ -3,7 +3,6 @@ import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const generateAccessAndRefreshTokens = async (userId) => {
    try {
@@ -156,11 +155,11 @@ const logoutUser = asyncHandler(async (req, res) => {
       {
          $set: { refreshToken: undefined },
       },
-      { new: true }
+      { new: true } //gives the updated document otherwise it gives old document
    );
    const options = {
-      httpOnly: true, //cannot modify the cookies from frontend
-      secure: true,
+      httpOnly: true, //cannot modify the cookies from frontend and javaScript cannot access them
+      secure: true, //only send the cookie on https
    };
 
    return res

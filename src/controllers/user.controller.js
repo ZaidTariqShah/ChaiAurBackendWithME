@@ -329,15 +329,15 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
             subscribersCount: {
                $size: "$subscribers",
             },
-         },
-         channelsSubscribedToCount: {
-            $size: "$subscribedTo",
-         },
-         isSubscribed: {
-            $cond: {
-               if: { $in: [req.user?._id, "$subscribers.subscriber"] },
-               then: true,
-               else: false,
+            channelsSubscribedToCount: {
+               $size: "$subscribedTo",
+            },
+            isSubscribed: {
+               $cond: {
+                  if: { $in: [req.user?._id, "$subscribers.subscriber"] },
+                  then: true,
+                  else: false,
+               },
             },
          },
       },

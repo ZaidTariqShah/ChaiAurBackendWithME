@@ -4,11 +4,12 @@ import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 const cookieOptions = {
    httpOnly: true, // cannot modify the cookies from frontend
-   secure: true, // only send the cookie on https
-   sameSite: "None", // to allow cross-site cookies
+   secure: false, // only send the cookie on https
+   sameSite: "lax", // to allow cross-site cookies
 };
 
 const generateAccessAndRefreshTokens = async (userId) => {
@@ -155,7 +156,7 @@ const logoutUser = asyncHandler(async (req, res) => {
    await User.findByIdAndUpdate(
       req.user._id,
       {
-         $set: { refreshToken: undefined },
+         $unset: { refreshToken: 1 },
       },
       { new: true } //gives the updated document otherwise it gives old document
    );

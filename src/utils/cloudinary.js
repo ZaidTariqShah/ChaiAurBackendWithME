@@ -13,6 +13,7 @@ const uploadOnCloudinary = async (localFilePath) => {
       //upload the file on cloudinary
       const response = await cloudinary.uploader.upload(localFilePath, {
          resource_type: "auto",
+         timeout: 60000, 
       });
       //file has been uploaded successfully
       console.log("file is uploaded on cloudinary", response.url);
@@ -20,8 +21,15 @@ const uploadOnCloudinary = async (localFilePath) => {
       return response; // for the user
    } catch (error) {
       console.error("Cloudinary Upload Error:", error);
-      fs.unlinkSync(localFilePath); // Remove the locally saved file
-      return null;
+      console.log("FALLBACK: Using local file due to upload failure.");
+      // fs.unlinkSync(localFilePath); // KEEP the file for local fallback
+      
+      // Construct local URL
+      const path = await import("path");
+      const filename = path.default.basename(localFilePath);
+      const localUrl = `/temp/${filename}`;
+      
+      return { url: localUrl };
    }
 };
 

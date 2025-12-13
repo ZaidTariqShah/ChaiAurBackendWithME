@@ -147,7 +147,7 @@ const loginUser = asyncHandler(async (req, res) => {
       .json(
          new ApiResponse(
             200,
-            { user: loggedInUser, accessToken, refreshToken }, // refresh code is sensitive, so we should not send it in response body
+            { user: loggedInUser, accessToken }, // refresh code is sensitive, so we should not send it in response body
             "User logged In Successfully"
          )
       );
